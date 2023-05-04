@@ -10,7 +10,7 @@ public class Main {
         welcome.confirmation();
 
         Board board = new Board();
-        board.drawBoard();
-
+        board.makeBoard();
+        board.chooseMove();
     }
 }

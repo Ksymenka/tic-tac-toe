@@ -13,6 +13,7 @@ public class Welcome {
         System.out.println("Hello second player! Please type in your name: ");
         this.name2 = scan.nextLine();
     }
+
     //confirmation of set values
     public void confirmation() {
         System.out.println("Just to be sure. First player's name is \"" + name1 + "\" and second player's name is \"" + name2 + "\" am I right?\n"

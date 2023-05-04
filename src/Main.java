@@ -8,5 +8,8 @@ public class Main {
         Players player1 = new Players(welcome.name1);
         Players player2 = new Players(welcome.name2);
         welcome.confirmation();
+
+        Board.drawBoard();
+
     }
 }

@@ -9,7 +9,8 @@ public class Main {
         Players player2 = new Players(welcome.name2);
         welcome.confirmation();
 
-        Board.drawBoard();
+        Board board = new Board();
+        board.drawBoard();
 
     }
 }

@@ -15,18 +15,22 @@ public class Welcome {
     }
     //confirmation of set values
     public void confirmation() {
-        System.out.println("Just to be sure. First player's name is " + name1 + " and second player's name is " + name2 + " am I right?\n"
-        + "(type \"yes\" or \"no\")");
+        System.out.println("Just to be sure. First player's name is \"" + name1 + "\" and second player's name is \"" + name2 + "\" am I right?\n"
+        + "(type \"y\" or \"n\")");
         String respond = scan.nextLine();
-        if (respond == "yes") {
-            System.out.println("Great! So let us play!");
-        } else if (respond == "no") {
-            System.out.println("Whoops! Let's correct the mistakes we made.\n\n");
-            welcome();
-            confirmation();
-        } else {
-            System.out.println("Sorry! Inccorect respond! Let's try that again, shall we?");
-            confirmation();
+        System.out.println(respond);
+        switch (respond) {
+            case "y":
+                System.out.println("Great! So let us play!");
+                break;
+            case "n":
+                System.out.println("Whoopsie! Let's correct our mistakes.\n");
+                welcome();
+                confirmation();
+                break;
+            default:
+                System.out.println("Sorry! Wrong answers. Input must me \"y\" or \"n\"!");
+                confirmation();
         }
     }
 

@@ -1,7 +1,6 @@
 public class Players {
     String name;
-    int points;
-
+    static int pointsPlayer1, pointPlayer2;
     Players(String name) {
         this.name = name;
     }

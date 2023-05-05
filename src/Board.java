@@ -23,12 +23,10 @@ public class Board {
         }
     }
 
-    void chooseMove() {
+    void chooseMove(String player1Name, String player2Name) {
         Scanner scanner = new Scanner(System.in);
         Welcome welcome = new Welcome();
-        Players player1 = new Players(welcome.name1);
-        Players player2 = new Players(welcome.name2);
-        System.out.println(player1.name + "'s turn!");
+        System.out.println(player1Name + "'s turn!");
         drawBoard();
         int row, column;
         System.out.println("Please select number of *row* you want to choose:");

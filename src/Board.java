@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class Board {
     String player1Name, player2Name;
-    int n = 3;
-    char[][] board = new char[n][n];
+
+    char[][] board = new char[3][3];
 
     void makeBoard() {
-        for (int i = 0; i < this.n; i++) {
-            for (int j = 0; j < this.n; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 board[i][j] = '_';
             }
             System.out.println();
@@ -16,10 +16,10 @@ public class Board {
 
     void drawBoard() {
         System.out.print("  0 1 2\n");
-        for (int i = 0; i < this.n; i++) {
+        for (int i = 0; i < 3; i++) {
 
             System.out.print(i + " ");
-            for (int j = 0; j < this.n; j++) {
+            for (int j = 0; j < 3; j++) {
                 System.out.printf(String.valueOf(board[i][j]) + " ");
             }
             System.out.println();
@@ -70,7 +70,32 @@ public class Board {
         drawBoard();
     }
 
-
-
+    boolean checkWin() {
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] == 'X') {
+                for (int j = 1; j < 3; j++) {
+                    if (board[i][j] == 'X') {
+                        System.out.println(player1Name + " won!");
+                        Players.pointsPlayer1++;
+                        drawBoard();
+                        return false;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] == 'X') {
+                for (int j = 1; j < 3; j++) {
+                    if (board[i][j] == 'X') {
+                        System.out.println(player2Name + " won!");
+                        Players.pointsPlayer2++;
+                        drawBoard();
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }
 

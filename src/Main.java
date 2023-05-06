@@ -11,8 +11,6 @@ public class Main {
 
         Board board = new Board();
         board.makeBoard();
-        do {
-            board.chooseMove(player1.name, player2.name);
-        } while (board.winning(player1.name, player2.name) == false);
+        board.chooseMove(player1.name, player2.name);
     }
 }

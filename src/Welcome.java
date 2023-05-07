@@ -21,17 +21,16 @@ public class Welcome {
         String respond = scan.nextLine();
         System.out.println(respond);
         switch (respond) {
-            case "y":
-                System.out.println("Great! So let us play!");
-                break;
-            case "n":
+            case "y" -> System.out.println("Great! So let us play!");
+            case "n" -> {
                 System.out.println("Whoopsie! Let's correct our mistakes.\n");
                 welcome();
                 confirmation();
-                break;
-            default:
+            }
+            default -> {
                 System.out.println("Sorry! Wrong answers. Input must me \"y\" or \"n\"!");
                 confirmation();
+            }
         }
     }
 

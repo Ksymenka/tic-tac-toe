@@ -71,31 +71,17 @@ public class Board {
     }
 
     boolean checkWin() {
+
+
+
         for (int i = 0; i < 3; i++) {
-            if (board[i][0] == 'X') {
-                for (int j = 1; j < 3; j++) {
-                    if (board[i][j] == 'X') {
-                        System.out.println(player1Name + " won!");
-                        Players.pointsPlayer1++;
-                        drawBoard();
-                        return false;
-                    }
-                }
+            if (board [i][0] == 'X') {
+
             }
-        }
-        for (int i = 0; i < 3; i++) {
-            if (board[i][0] == 'X') {
-                for (int j = 1; j < 3; j++) {
-                    if (board[i][j] == 'X') {
-                        System.out.println(player2Name + " won!");
-                        Players.pointsPlayer2++;
-                        drawBoard();
-                        return false;
-                    }
-                }
-            }
+
         }
         return true;
     }
 }
+
 

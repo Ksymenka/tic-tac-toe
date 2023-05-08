@@ -13,5 +13,6 @@ public class Main {
         do {
             board.chooseMove(player1.name, player2.name);
         }while (!board.checkWin());
+
     }
 }

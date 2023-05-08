@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Board {
     String player1Name, player2Name;
 
-    char symbol;
     char[][] board = new char[3][3];
 
     void makeBoard() {
@@ -71,6 +70,24 @@ public class Board {
         drawBoard();
     }
 
+    boolean checkWin() {
+        char symbol;
+        if (checkRow()) {
+            symbol = checkSymbol(0,0);
+            win(symbol);
+            return true;
+        } else if (checkColumn()) {
+            symbol= checkSymbol(0,0);
+            win(symbol);
+            return true;
+        } else if (checkSlant()) {
+            symbol = checkSymbol(1,1);
+            win(symbol);
+            return true;
+        }
+        return false;
+    }
+
     void win(char symbol) {
         if (symbol == 'X') {
             ++Players.pointsPlayer1;
@@ -85,26 +102,48 @@ public class Board {
 
     boolean checkRow() { //sprawdza rząd
         char symbol = checkSymbol(0, 0);
+        if (defaultField(symbol)) {
+            for (int column = 0; column <=2; column++) {
+                if (board[column][0] == symbol) {
+                    return true;
+                }else {
+                    for (int row = 1; row <=2; row++) {
+                        if (board[row][column] == symbol) {
+                            return true;
+                        }
+                    }
+                }
+            }
 
-
+        }
         return false;
     }
 
     boolean checkColumn() { //sprawdza kolumnę
-
+        char symbol = checkSymbol(0,0);
+        if (defaultField(symbol)) {
+            for (int row = 0; row <=2; row++) {
+                if (board[row][0] == symbol) {
+                    return true;
+                }else {
+                    for (int column = 1; column <=2; column++) {
+                        if (board[row][column] == symbol) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
 
     boolean checkSlant() { //sprawdza kąt
         char symbol = checkSymbol(1, 1);
-        if (symbol == '_') { //jeżeli nie ma znaku gracza zwróć false
-            return false;
-        } else if (symbol == 'X' || symbol == 'O') {
+        if (defaultField(symbol)){
             for (int row = 0; row <= 2; row++) {
                 for (int column = 0; column <= 2; column++) {
                     if (board[row][column] == symbol) {
                         return true; //jeżeli skos od pierwszego pola jest wypełniony znakami zwróć true
-
                     }
                 }
             }
@@ -120,7 +159,7 @@ public class Board {
     }
 
     char checkSymbol(int row, int column) { //tylko sprawdza jaki symbol jest na danej pozycji!!
-        symbol = board[row][column];
+        char symbol = board[row][column];
         if (symbol == '_') {
             return '_';
         } else if (symbol == 'X') {
@@ -130,6 +169,13 @@ public class Board {
             return 'O';
         }
         return 0;
+    }
+
+    boolean defaultField(char symbol) { //jezeli pole ma przypisaną wartość X lub O zwróć true
+        if (symbol == 'X' || symbol == 'O') {
+            return true;
+        }
+        return false;
     }
 
 

@@ -12,6 +12,6 @@ public class Main {
         board.makeBoard();
         do {
             board.chooseMove(player1.name, player2.name);
-        }while (board.checkWin());
+        }while (!board.checkWin());
     }
 }

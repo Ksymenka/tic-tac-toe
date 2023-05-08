@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Board {
     String player1Name, player2Name;
 
+    char symbol;
     char[][] board = new char[3][3];
 
     void makeBoard() {
@@ -70,18 +71,67 @@ public class Board {
         drawBoard();
     }
 
-    boolean checkWin() {
-
-
-
-        for (int i = 0; i < 3; i++) {
-            if (board [i][0] == 'X') {
-
-            }
-
+    void win(char symbol) {
+        if (symbol == 'X') {
+            ++Players.pointsPlayer1;
+            System.out.println(player1Name + " has won!");
+        } else if (symbol == 'O') {
+            ++Players.pointsPlayer2;
+            System.out.println(player2Name + " has won!");
         }
-        return true;
-    }
-}
 
+
+    }
+
+    boolean checkRow() { //sprawdza rząd
+        char symbol = checkSymbol(0, 0);
+
+
+        return false;
+    }
+
+    boolean checkColumn() { //sprawdza kolumnę
+
+        return false;
+    }
+
+    boolean checkSlant() { //sprawdza kąt
+        char symbol = checkSymbol(1, 1);
+        if (symbol == '_') { //jeżeli nie ma znaku gracza zwróć false
+            return false;
+        } else if (symbol == 'X' || symbol == 'O') {
+            for (int row = 0; row <= 2; row++) {
+                for (int column = 0; column <= 2; column++) {
+                    if (board[row][column] == symbol) {
+                        return true; //jeżeli skos od pierwszego pola jest wypełniony znakami zwróć true
+
+                    }
+                }
+            }
+            for (int row = 2; row < 0; row--) {
+                for (int column = 0; column <= 2; column++) {
+                    if (board[row][column] == symbol) {
+                        return true; //jeśli skos od dołu jet wypełniony znakami zwróć true
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    char checkSymbol(int row, int column) { //tylko sprawdza jaki symbol jest na danej pozycji!!
+        symbol = board[row][column];
+        if (symbol == '_') {
+            return '_';
+        } else if (symbol == 'X') {
+            return 'X';
+
+        } else if (symbol == 'O') {
+            return 'O';
+        }
+        return 0;
+    }
+
+
+}
 

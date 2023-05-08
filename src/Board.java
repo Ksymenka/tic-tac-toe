@@ -55,6 +55,7 @@ public class Board {
         }
         return row;
     }
+
     int chooseColumn() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please select number of *column* you want to choose:");
@@ -71,7 +72,9 @@ public class Board {
         row = chooseRow();
         column = chooseColumn();
         checkIfTaken(row, column, 'X');
-    }    void player2Move() {
+    }
+
+    void player2Move() {
         int row, column;
         drawBoard();
         row = chooseRow();
@@ -93,8 +96,6 @@ public class Board {
             }
         }
     }
-    //sprawdzanie wygranej
-
     boolean checkWin() {
         char symbol;
         if (checkRow()) {
@@ -115,16 +116,16 @@ public class Board {
 
     void win(char symbol) {
         if (symbol == 'X') {
-            ++Players.pointsPlayer1;
+            ++Player.pointsPlayer1;
             System.out.println(player1Name + " has won!");
         } else if (symbol == 'O') {
-            ++Players.pointsPlayer2;
+            ++Player.pointsPlayer2;
             System.out.println(player2Name + " has won!");
         }
 
 
     }
-    
+
     //tu musi być błąd!!
     boolean checkRow() { //sprawdza rząd
         int row = 0;
@@ -139,7 +140,6 @@ public class Board {
         if (takenField(symbol)) {
             for (int column = 0; column < 3; column++) {
                 if (board[0][column] != symbol) {
-                    System.out.println("jak to sie wyswietla go gowno nie dziala");
                     allSymbolsMatch = false;
                     testRest = true;
                     break;

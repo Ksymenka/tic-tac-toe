@@ -5,8 +5,8 @@ public class Main {
         boolean win = false;
         Welcome welcome = new Welcome();
         welcome.welcome();
-        Players player1 = new Players(welcome.name1);
-        Players player2 = new Players(welcome.name2);
+        Player player1 = new Player(welcome.name1);
+        Player player2 = new Player(welcome.name2);
         welcome.confirmation();
 
         Board board = new Board();

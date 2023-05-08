@@ -2,6 +2,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        boolean win = false;
         Welcome welcome = new Welcome();
         welcome.welcome();
         Players player1 = new Players(welcome.name1);
@@ -10,9 +11,7 @@ public class Main {
 
         Board board = new Board();
         board.makeBoard();
-        do {
-            board.chooseMove(player1.name, player2.name);
-        }while (!board.checkWin());
 
+        board.startGame(player1.name, player2.name);
     }
 }

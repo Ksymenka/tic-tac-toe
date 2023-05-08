@@ -34,6 +34,18 @@ public class Board {
         return false;
     }
 
+    void checkIfTaken(int row, int column, char symbol) {
+        if (board[row][column] == '_') {
+            board[row][column] = symbol;
+        } else {
+            System.out.println("Sorry! This spot is already taken. Please choose another one!");
+            if (symbol == 'X') {
+                player1Move();
+            } else player2Move();
+        }
+
+    }
+
     int chooseRow() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please select number of *row* you want to choose:");
@@ -55,28 +67,32 @@ public class Board {
 
     void player1Move() {
         int row, column;
+        drawBoard();
         row = chooseRow();
         column = chooseColumn();
-        board[row][column] = 'X';
-        drawBoard();
+        checkIfTaken(row, column, 'X');
     }    void player2Move() {
         int row, column;
+        drawBoard();
         row = chooseRow();
         column = chooseColumn();
-        board[row][column] = 'O';
-        drawBoard();
+        checkIfTaken(row, column, 'O');
     }
 
-    void chooseMove(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
-        System.out.println(player1Name + "'s turn!");
-        drawBoard();
-        player1Move();
-        System.out.println(player2Name + "'s turn!");
-        player2Move();
+    void startGame(String player1Name, String player2Name) {
+        while (true) {
+            this.player1Name = player1Name;
+            this.player2Name = player2Name;
+            System.out.println(player1Name + "'s turn!");
+            player1Move();
+            System.out.println(player2Name + "'s turn!");
+            player2Move();
+            checkWin();
+            if (checkWin()) {
+                break;
+            }
+        }
     }
-
     //sprawdzanie wygranej
 
     boolean checkWin() {
@@ -108,18 +124,31 @@ public class Board {
 
 
     }
-
+    
+    //tu musi być błąd!!
     boolean checkRow() { //sprawdza rząd
-        char symbol = checkSymbol(0, 0);
+        int row = 0;
+        char symbol = checkSymbol(row, 0);
+        while (symbol == '_' && row < 3) {
+            row++;
+            symbol = checkSymbol(row, 0);
+            System.out.println(symbol + "dupaupaa"); //checkrow sie w ogóle wukonuje?
+        }
         boolean allSymbolsMatch = true;
-        if (defaultField(symbol)) {
+        boolean testRest = false;
+        if (takenField(symbol)) {
             for (int column = 0; column < 3; column++) {
-                if (board[column][0] != symbol) {
+                if (board[0][column] != symbol) {
+                    System.out.println("jak to sie wyswietla go gowno nie dziala");
                     allSymbolsMatch = false;
-                }else {
-                    for (int row = 1; row < 3; row++) {
+                    testRest = true;
+                    break;
+                }
+                if (testRest) {
+                    for (row = 0; row < 3; row++) {
                         if (board[row][column] != symbol) {
                             allSymbolsMatch = false;
+                            break;
                         }
                     }
                 }
@@ -134,7 +163,7 @@ public class Board {
     boolean checkColumn() { //sprawdza kolumnę
         char symbol = checkSymbol(0,0);
         boolean allSymbolsMatch = true;
-        if (defaultField(symbol)) {
+        if (takenField(symbol)) {
             for (int row = 0; row < 3; row++) {
                 if (board[row][0] != symbol) {
                     allSymbolsMatch = false;
@@ -154,7 +183,7 @@ public class Board {
     boolean checkSlant() { //sprawdza kąt
         char symbol = checkSymbol(1, 1);
         boolean allSymbolsMatch = true;
-        if (defaultField(symbol)){
+        if (takenField(symbol)){
             for (int row = 0; row < 3; row++) {
                 for (int column = 0; column <= 2; column++) {
                     if (board[row][column] != symbol) {
@@ -178,18 +207,11 @@ public class Board {
 
     char checkSymbol(int row, int column) { //tylko sprawdza jaki symbol jest na danej pozycji!!
         char symbol = board[row][column];
-        if (symbol == '_') {
-            return '_';
-        } else if (symbol == 'X') {
-            return 'X';
-
-        } else if (symbol == 'O') {
-            return 'O';
-        }
-        return 0;
+        return symbol;
     }
 
-    boolean defaultField(char symbol) { //jezeli pole ma przypisaną wartość X lub O zwróć true
+
+    boolean takenField(char symbol) { //jezeli pole ma przypisaną wartość X lub O zwróć true
         if (symbol == 'X' || symbol == 'O') {
             return true;
         }

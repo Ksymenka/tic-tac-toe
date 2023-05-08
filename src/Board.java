@@ -102,57 +102,66 @@ public class Board {
 
     boolean checkRow() { //sprawdza rząd
         char symbol = checkSymbol(0, 0);
+        boolean allSymbolsMatch = true;
         if (defaultField(symbol)) {
             for (int column = 0; column <=2; column++) {
-                if (board[column][0] == symbol) {
-                    return true;
+                if (board[column][0] != symbol) {
+                    allSymbolsMatch = false;
                 }else {
                     for (int row = 1; row <=2; row++) {
                         if (board[row][column] == symbol) {
-                            return true;
+                            allSymbolsMatch = false;
                         }
                     }
                 }
             }
-
+        }
+        if (allSymbolsMatch) {
+            return true;
         }
         return false;
     }
 
     boolean checkColumn() { //sprawdza kolumnę
         char symbol = checkSymbol(0,0);
+        boolean allSymbolsMatch = true;
         if (defaultField(symbol)) {
             for (int row = 0; row <=2; row++) {
-                if (board[row][0] == symbol) {
-                    return true;
+                if (board[row][0] != symbol) {
+                    allSymbolsMatch = false;
                 }else {
                     for (int column = 1; column <=2; column++) {
-                        if (board[row][column] == symbol) {
-                            return true;
+                        if (board[row][column] != symbol) {
+                            allSymbolsMatch = false;
                         }
                     }
                 }
             }
         }
+        if (allSymbolsMatch) {return true;}
         return false;
     }
 
     boolean checkSlant() { //sprawdza kąt
         char symbol = checkSymbol(1, 1);
+        boolean allSymbolsMatch = true;
         if (defaultField(symbol)){
             for (int row = 0; row <= 2; row++) {
                 for (int column = 0; column <= 2; column++) {
-                    if (board[row][column] == symbol) {
-                        return true; //jeżeli skos od pierwszego pola jest wypełniony znakami zwróć true
+                    if (board[row][column] != symbol) {
+                        allSymbolsMatch = false;
                     }
                 }
             }
             for (int row = 2; row < 0; row--) {
                 for (int column = 0; column <= 2; column++) {
-                    if (board[row][column] == symbol) {
-                        return true; //jeśli skos od dołu jet wypełniony znakami zwróć true
+                    if (board[row][column] != symbol) {
+                        allSymbolsMatch = false;
                     }
                 }
+            }
+            if (allSymbolsMatch) {
+                return true;
             }
         }
         return false;
@@ -178,6 +187,4 @@ public class Board {
         return false;
     }
 
-
 }
-

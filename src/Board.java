@@ -26,36 +26,45 @@ public class Board {
         }
     }
 
-    void player1Move() {
-        Scanner scanner = new Scanner(System.in);
-        int row, column;
-        System.out.println("Please select number of *row* you want to choose:");
-        row = scanner.nextInt();
-        if (row > 2) {
-            System.out.println("Value out of range!");
+    boolean valueOutOfRange(int value) {
+        if (value > 2) {
+            System.out.println("Value out of range! Please try again.");
+            return true;
         }
-        System.out.println("Please select number of *column* you want to choose:");
-        column = scanner.nextInt();
-        if (column > 2) {
-            System.out.println("Value out of range!");
-        }
-        board[row][column] = 'X';
+        return false;
     }
 
-    void player2Move() {
+    int chooseRow() {
         Scanner scanner = new Scanner(System.in);
-        int row, column;
         System.out.println("Please select number of *row* you want to choose:");
-        row = scanner.nextInt();
-        if (row > 2) {
-            System.out.println("Value out of range!");
+        int row = scanner.nextInt();
+        if (valueOutOfRange(row)) {
+            return chooseRow();
         }
+        return row;
+    }
+    int chooseColumn() {
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Please select number of *column* you want to choose:");
-        column = scanner.nextInt();
-        if (column > 2) {
-            System.out.println("Value out of range!");
+        int column = scanner.nextInt();
+        if (valueOutOfRange(column)) {
+            chooseColumn();
         }
+        return column;
+    }
+
+    void player1Move() {
+        int row, column;
+        row = chooseRow();
+        column = chooseColumn();
+        board[row][column] = 'X';
+        drawBoard();
+    }    void player2Move() {
+        int row, column;
+        row = chooseRow();
+        column = chooseColumn();
         board[row][column] = 'O';
+        drawBoard();
     }
 
     void chooseMove(String player1Name, String player2Name) {
@@ -64,11 +73,11 @@ public class Board {
         System.out.println(player1Name + "'s turn!");
         drawBoard();
         player1Move();
-        drawBoard();
         System.out.println(player2Name + "'s turn!");
         player2Move();
-        drawBoard();
     }
+
+    //sprawdzanie wygranej
 
     boolean checkWin() {
         char symbol;
@@ -104,12 +113,12 @@ public class Board {
         char symbol = checkSymbol(0, 0);
         boolean allSymbolsMatch = true;
         if (defaultField(symbol)) {
-            for (int column = 0; column <=2; column++) {
+            for (int column = 0; column < 3; column++) {
                 if (board[column][0] != symbol) {
                     allSymbolsMatch = false;
                 }else {
-                    for (int row = 1; row <=2; row++) {
-                        if (board[row][column] == symbol) {
+                    for (int row = 1; row < 3; row++) {
+                        if (board[row][column] != symbol) {
                             allSymbolsMatch = false;
                         }
                     }
@@ -126,11 +135,11 @@ public class Board {
         char symbol = checkSymbol(0,0);
         boolean allSymbolsMatch = true;
         if (defaultField(symbol)) {
-            for (int row = 0; row <=2; row++) {
+            for (int row = 0; row < 3; row++) {
                 if (board[row][0] != symbol) {
                     allSymbolsMatch = false;
                 }else {
-                    for (int column = 1; column <=2; column++) {
+                    for (int column = 1; column < 3; column++) {
                         if (board[row][column] != symbol) {
                             allSymbolsMatch = false;
                         }
@@ -146,14 +155,14 @@ public class Board {
         char symbol = checkSymbol(1, 1);
         boolean allSymbolsMatch = true;
         if (defaultField(symbol)){
-            for (int row = 0; row <= 2; row++) {
+            for (int row = 0; row < 3; row++) {
                 for (int column = 0; column <= 2; column++) {
                     if (board[row][column] != symbol) {
                         allSymbolsMatch = false;
                     }
                 }
             }
-            for (int row = 2; row < 0; row--) {
+            for (int row = 3; row < 0; row--) {
                 for (int column = 0; column <= 2; column++) {
                     if (board[row][column] != symbol) {
                         allSymbolsMatch = false;

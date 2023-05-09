@@ -17,7 +17,6 @@ public class Board {
     void drawBoard() {
         System.out.print("  0 1 2\n");
         for (int i = 0; i < 3; i++) {
-
             System.out.print(i + " ");
             for (int j = 0; j < 3; j++) {
                 System.out.printf(String.valueOf(board[i][j]) + " ");
@@ -61,7 +60,7 @@ public class Board {
         System.out.println("Please select number of *column* you want to choose:");
         int column = scanner.nextInt();
         if (valueOutOfRange(column)) {
-            chooseColumn();
+            return chooseColumn();
         }
         return column;
     }
@@ -101,8 +100,19 @@ public class Board {
     }
     boolean checkWin() {
         char symbol;
+        int row, column;
+        System.out.println(checkRow());
         if (checkRow()) {
-            symbol = checkSymbol(0,0);
+            row = 0; column = 0;
+            symbol = checkSymbol(row,column);
+            if (symbol == '_') {
+                for (row = 1; row < 3; row++) {
+                    for (column = 1; column < 3; column++) {
+                        checkWin();
+                    }
+                    checkWin();
+                }
+            }
             win(symbol);
             return true;
         } else if (checkColumn()) {
@@ -137,14 +147,14 @@ public class Board {
         char symbol = searchForSymbol();
         boolean allSymbolsMatch = true;
         boolean testRest = false;
-        if (takenField(symbol)) {
+        if (symbol == '_') {
+            return false;
+        }
             for (int column = 0; column < 3; column++) {
                 if (board[0][column] != symbol) {
                     allSymbolsMatch = false;
-                    testRest = true;
                     break;
-                }
-                if (testRest) {
+                } else {
                     for (row = 0; row < 3; row++) {
                         if (board[row][column] != symbol) {
                             allSymbolsMatch = false;
@@ -153,7 +163,6 @@ public class Board {
                     }
                 }
             }
-        }
         if (allSymbolsMatch) {
             return true;
         }
@@ -161,48 +170,11 @@ public class Board {
     }
 
     boolean checkColumn() { //sprawdza kolumnę
-        char symbol = checkSymbol(0,0);
-        boolean allSymbolsMatch = true;
-        if (takenField(symbol)) {
-            for (int row = 0; row < 3; row++) {
-                if (board[row][0] != symbol) {
-                    allSymbolsMatch = false;
-                }else {
-                    for (int column = 1; column < 3; column++) {
-                        if (board[row][column] != symbol) {
-                            allSymbolsMatch = false;
-                        }
-                    }
-                }
-            }
-        }
-        if (allSymbolsMatch) {return true;}
-        return false;
+    return false;
     }
 
     boolean checkSlant() { //sprawdza kąt
-        char symbol = checkSymbol(1, 1);
-        boolean allSymbolsMatch = true;
-        if (takenField(symbol)){
-            for (int row = 0; row < 3; row++) {
-                for (int column = 0; column <= 2; column++) {
-                    if (board[row][column] != symbol) {
-                        allSymbolsMatch = false;
-                    }
-                }
-            }
-            for (int row = 3; row < 0; row--) {
-                for (int column = 0; column <= 2; column++) {
-                    if (board[row][column] != symbol) {
-                        allSymbolsMatch = false;
-                    }
-                }
-            }
-            if (allSymbolsMatch) {
-                return true;
-            }
-        }
-        return false;
+    return false;
     }
 
     char checkSymbol(int row, int column) { //zwraca symbol z danej pozycji

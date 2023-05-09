@@ -5,7 +5,7 @@ public class Board {
 
     char[][] board = new char[3][3];
 
-    void makeBoard() {
+    void resetBoard() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 board[i][j] = '_';
@@ -88,6 +88,9 @@ public class Board {
             this.player2Name = player2Name;
             System.out.println(player1Name + "'s turn!");
             player1Move();
+            if (checkWin()) {
+                break;
+            }
             System.out.println(player2Name + "'s turn!");
             player2Move();
             checkWin();
@@ -117,9 +120,11 @@ public class Board {
     void win(char symbol) {
         if (symbol == 'X') {
             ++Player.pointsPlayer1;
+            drawBoard();
             System.out.println(player1Name + " has won!");
         } else if (symbol == 'O') {
             ++Player.pointsPlayer2;
+            drawBoard();
             System.out.println(player2Name + " has won!");
         }
 
@@ -129,12 +134,7 @@ public class Board {
     //tu musi być błąd!!
     boolean checkRow() { //sprawdza rząd
         int row = 0;
-        char symbol = checkSymbol(row, 0);
-        while (symbol == '_' && row < 3) {
-            row++;
-            symbol = checkSymbol(row, 0);
-            System.out.println(symbol + "dupaupaa"); //checkrow sie w ogóle wukonuje?
-        }
+        char symbol = searchForSymbol();
         boolean allSymbolsMatch = true;
         boolean testRest = false;
         if (takenField(symbol)) {
@@ -205,7 +205,7 @@ public class Board {
         return false;
     }
 
-    char checkSymbol(int row, int column) { //tylko sprawdza jaki symbol jest na danej pozycji!!
+    char checkSymbol(int row, int column) { //zwraca symbol z danej pozycji
         char symbol = board[row][column];
         return symbol;
     }
@@ -216,6 +216,25 @@ public class Board {
             return true;
         }
         return false;
+    }
+
+    char searchForSymbol() {
+        char symbol;
+        int row, column;
+        for (column  = 0; column < 3; column++) {
+            symbol = checkSymbol(0,column);
+            if (symbol == 'X' || symbol == 'O') {
+                return symbol;
+            } else {
+                for (row = 1; row < 3; row++) {
+                    if (symbol == 'X' || symbol == 'O') {
+                        symbol = checkSymbol(row, column);
+                        return symbol;
+                    }
+                }
+            }
+        }
+        return '_';
     }
 
 }

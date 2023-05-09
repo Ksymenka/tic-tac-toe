@@ -10,7 +10,7 @@ public class Main {
         welcome.confirmation();
 
         Board board = new Board();
-        board.makeBoard();
+        board.resetBoard();
 
         board.startGame(player1.name, player2.name);
     }

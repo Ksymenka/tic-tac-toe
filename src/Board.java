@@ -126,20 +126,17 @@ public class Board {
 
     //tu musi być błąd!!
     boolean checkRow() { //sprawdza rząd
-        boolean firstRow = false;
         boolean allMatch = false;
         for (int row = 0; row < 3; row++) {
             if (board[row][0] != '_') {
-                firstRow = true;
-                if (firstRow) {
-                    char symbol = board[row][0];
-                    for (int column = 1; column < 3; column++) {
-                        if (board[row][column] != symbol) {
-                            allMatch = false;
-                            break;
-                        } else {
-                            allMatch = true;
-                        }
+                char symbol = board[row][0];
+                for (int column = 1; column < 3; column++) {
+                    if (board[row][column] != symbol) {
+                        allMatch = false;
+                        break;
+                    } else {
+                        allMatch = true;
+                        break;
                     }
                 }
             }

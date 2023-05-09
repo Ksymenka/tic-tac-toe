@@ -4,6 +4,7 @@ public class Board {
     String player1Name, player2Name;
 
     char[][] board = new char[3][3];
+    char symbol;
 
     void resetBoard() {
         for (int i = 0; i < 3; i++) {
@@ -98,36 +99,18 @@ public class Board {
             }
         }
     }
+
     boolean checkWin() {
-        char symbol;
-        int row, column;
         System.out.println(checkRow());
         if (checkRow()) {
-            row = 0; column = 0;
-            symbol = checkSymbol(row,column);
-            if (symbol == '_') {
-                for (row = 1; row < 3; row++) {
-                    for (column = 1; column < 3; column++) {
-                        checkWin();
-                    }
-                    checkWin();
-                }
-            }
-            win(symbol);
-            return true;
-        } else if (checkColumn()) {
-            symbol= checkSymbol(0,0);
-            win(symbol);
-            return true;
-        } else if (checkSlant()) {
-            symbol = checkSymbol(1,1);
-            win(symbol);
+            winMessage(this.symbol);
             return true;
         }
+
         return false;
     }
 
-    void win(char symbol) {
+    void winMessage(char symbol) {
         if (symbol == 'X') {
             ++Player.pointsPlayer1;
             drawBoard();
@@ -143,31 +126,27 @@ public class Board {
 
     //tu musi być błąd!!
     boolean checkRow() { //sprawdza rząd
-        int row = 0;
-        char symbol = searchForSymbol();
-        boolean allSymbolsMatch = true;
-        boolean testRest = false;
-        if (symbol == '_') {
-            return false;
-        }
-            for (int column = 0; column < 3; column++) {
-                if (board[0][column] != symbol) {
-                    allSymbolsMatch = false;
-                    break;
-                } else {
-                    for (row = 0; row < 3; row++) {
+        boolean firstRow = false;
+        boolean allMatch = false;
+        for (int row = 0; row < 3; row++) {
+            if (board[row][0] != '_') {
+                firstRow = true;
+                if (firstRow) {
+                    char symbol = board[row][0];
+                    for (int column = 1; column < 3; column++) {
                         if (board[row][column] != symbol) {
-                            allSymbolsMatch = false;
+                            allMatch = false;
                             break;
+                        } else {
+                            allMatch = true;
                         }
                     }
                 }
             }
-        if (allSymbolsMatch) {
-            return true;
         }
-        return false;
+        return allMatch;
     }
+
 
     boolean checkColumn() { //sprawdza kolumnę
     return false;

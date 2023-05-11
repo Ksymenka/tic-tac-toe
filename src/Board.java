@@ -104,6 +104,7 @@ public class Board {
 
     boolean checkWin() {
         char[] Row = new char[3];
+        char[] Column = new char[3];
         while (true) {
             for (int column = 0; column < 3; column++) {
                 for (int row = 0; row < 3; row++) {
@@ -111,6 +112,14 @@ public class Board {
                 }
                 System.out.println(Row);
                 System.out.println(checkMatch(Row));
+                System.out.println("dupa");
+            }
+            for (int row = 0; row < 3; row++) {
+                for (int column = 0; column < 3; column++) {
+                    Column[row] = board[row][column];
+                }
+                System.out.println(Column);
+                System.out.println(checkMatch(Column));
             }
             break;
         }
@@ -169,10 +178,11 @@ public class Board {
     }
 
     boolean checkMatch(char[] symbol) {
-        for (int i = 1; i < 3; i++) {
-            for (int j = 3; j > -1; j--) {
-                if (symbol[i] == symbol[j]) {
-
+        for (int i = 0; i < 3; i++) {
+            if (symbol[i] != '_') {
+                if (symbol[i] == symbol[2] && symbol[i] == symbol[1]) {
+                    this.symbol = symbol[1];
+                    return true;
                 }
             }
         }

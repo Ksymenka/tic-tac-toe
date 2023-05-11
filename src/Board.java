@@ -1,7 +1,5 @@
-import java.lang.reflect.Array;
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Arrays;
 public class Board {
     String player1Name, player2Name;
 
@@ -91,12 +89,14 @@ public class Board {
             System.out.println(player1Name + "'s turn!");
             player1Move();
             if (checkWin()) {
+                winMessage();
                 break;
             }
             System.out.println(player2Name + "'s turn!");
             player2Move();
             checkWin();
             if (checkWin()) {
+                winMessage();
                 break;
             }
         }
@@ -105,21 +105,36 @@ public class Board {
     boolean checkWin() {
         char[] Row = new char[3];
         char[] Column = new char[3];
+        char[] Slant1 = new char[3];
+        char[] Slant2 = new char[3];
         while (true) {
+            //row
             for (int column = 0; column < 3; column++) {
                 for (int row = 0; row < 3; row++) {
                     Row[row] = board[column][row];
+                    if (checkMatch(Row)) return true;
                 }
-                System.out.println(Row);
-                System.out.println(checkMatch(Row));
-                System.out.println("dupa");
+
             }
+
+            //column
             for (int row = 0; row < 3; row++) {
                 for (int column = 0; column < 3; column++) {
-                    Column[row] = board[row][column];
+                    Column[column] = board[column][row];
+                    if (checkMatch(Column)) return true;
                 }
-                System.out.println(Column);
-                System.out.println(checkMatch(Column));
+            }
+
+            //first slant
+            for (int i = 0; i < 3; i++) {
+                Slant1[i] = board[i][i];
+                if (checkMatch(Slant1)) return true;
+            }
+
+            //second slant
+            for (int j = 2, i = 0; j > -1; j--, i++) {
+                Slant2[i] = board[i][j];
+                if (checkMatch(Slant2)) return true;
             }
             break;
         }
@@ -127,66 +142,23 @@ public class Board {
     }
 
     void winMessage() {
-        if (symbol == 'X') {
+        if (this.symbol == 'X') {
             ++Player.pointsPlayer1;
             drawBoard();
             System.out.println(player1Name + " has won!");
-        } else if (symbol == 'O') {
+        } else if (this.symbol == 'O') {
             ++Player.pointsPlayer2;
             drawBoard();
             System.out.println(player2Name + " has won!");
         }
     }
 
-    //tu musi być błąd!!
-    boolean checkRow() { //sprawdza rząd
-        for (int row = 0; row < 3; row++) {
-            if (board[row][0] != '_') {
-                char symbol = board[row][0];
-                for (int column = 1; column < 3; column++) {
-                    if (board[row][column] != symbol) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-
-    boolean checkColumn() { //sprawdza kolumnę
-        return false;
-    }
-
-    boolean checkSlant() { //sprawdza kąt
-        return false;
-    }
-
-    char checkSymbol(int row, int column) { //zwraca symbol z danej pozycji
-        char symbol = board[row][column];
-        return symbol;
-    }
-
-
-    boolean takenField(char symbol) { //jezeli pole ma przypisaną wartość X lub O zwróć true
-        if (symbol == 'X' || symbol == 'O') {
-            return true;
-        }
-        return false;
-    }
-
     boolean checkMatch(char[] symbol) {
         for (int i = 0; i < 3; i++) {
-            if (symbol[i] != '_') {
-                if (symbol[i] == symbol[2] && symbol[i] == symbol[1]) {
-                    this.symbol = symbol[1];
-                    return true;
-                }
-            }
+            if (symbol[i] != symbol[1]) return false;
+            if (symbol[i] == '_') return false;
         }
-        return false;
+        this.symbol = symbol[1];
+        return true;
     }
-
 }

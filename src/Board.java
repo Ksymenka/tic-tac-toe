@@ -1,5 +1,7 @@
+import java.lang.reflect.Array;
 import java.util.Scanner;
-
+import java.util.List;
+import java.util.ArrayList;
 public class Board {
     String player1Name, player2Name;
 
@@ -101,16 +103,21 @@ public class Board {
     }
 
     boolean checkWin() {
-        System.out.println(checkRow());
-        if (checkRow()) {
-            winMessage(this.symbol);
-            return true;
+        char[] Row = new char[3];
+        while (true) {
+            for (int column = 0; column < 3; column++) {
+                for (int row = 0; row < 3; row++) {
+                    Row[row] = board[column][row];
+                }
+                System.out.println(Row);
+                System.out.println(checkMatch(Row));
+            }
+            break;
         }
-
         return false;
     }
 
-    void winMessage(char symbol) {
+    void winMessage() {
         if (symbol == 'X') {
             ++Player.pointsPlayer1;
             drawBoard();
@@ -120,37 +127,32 @@ public class Board {
             drawBoard();
             System.out.println(player2Name + " has won!");
         }
-
-
     }
 
     //tu musi być błąd!!
     boolean checkRow() { //sprawdza rząd
-        boolean allMatch = false;
         for (int row = 0; row < 3; row++) {
             if (board[row][0] != '_') {
                 char symbol = board[row][0];
                 for (int column = 1; column < 3; column++) {
                     if (board[row][column] != symbol) {
-                        allMatch = false;
-                        break;
+                        return false;
                     } else {
-                        allMatch = true;
-                        break;
+                        return true;
                     }
                 }
             }
         }
-        return allMatch;
+        return false;
     }
 
 
     boolean checkColumn() { //sprawdza kolumnę
-    return false;
+        return false;
     }
 
     boolean checkSlant() { //sprawdza kąt
-    return false;
+        return false;
     }
 
     char checkSymbol(int row, int column) { //zwraca symbol z danej pozycji
@@ -166,23 +168,15 @@ public class Board {
         return false;
     }
 
-    char searchForSymbol() {
-        char symbol;
-        int row, column;
-        for (column  = 0; column < 3; column++) {
-            symbol = checkSymbol(0,column);
-            if (symbol == 'X' || symbol == 'O') {
-                return symbol;
-            } else {
-                for (row = 1; row < 3; row++) {
-                    if (symbol == 'X' || symbol == 'O') {
-                        symbol = checkSymbol(row, column);
-                        return symbol;
-                    }
+    boolean checkMatch(char[] symbol) {
+        for (int i = 1; i < 3; i++) {
+            for (int j = 3; j > -1; j--) {
+                if (symbol[i] == symbol[j]) {
+
                 }
             }
         }
-        return '_';
+        return false;
     }
 
 }

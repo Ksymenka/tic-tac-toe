@@ -50,6 +50,7 @@ public class Board {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please select number of *row* you want to choose:");
         int row = scanner.nextInt();
+
         if (valueOutOfRange(row)) {
             return chooseRow();
         }
@@ -83,6 +84,7 @@ public class Board {
     }
 
     void startGame(String player1Name, String player2Name) {
+        resetBoard();
         while (true) {
             this.player1Name = player1Name;
             this.player2Name = player2Name;
@@ -100,6 +102,8 @@ public class Board {
                 break;
             }
         }
+        restartGame();
+
     }
 
     boolean checkWin() {
@@ -136,6 +140,11 @@ public class Board {
                 Slant2[i] = board[i][j];
                 if (checkMatch(Slant2)) return true;
             }
+            //check for draw
+            if (checkDraw()) {
+                System.out.println("Game has ended with a draw! No points for anyone.");
+                return false;
+            }
             break;
         }
         return false;
@@ -145,20 +154,53 @@ public class Board {
         if (this.symbol == 'X') {
             ++Player.pointsPlayer1;
             drawBoard();
-            System.out.println(player1Name + " has won!");
+            System.out.println(player1Name + " has won! He has " + Player.pointsPlayer1 + " points at the moment.");
         } else if (this.symbol == 'O') {
             ++Player.pointsPlayer2;
             drawBoard();
-            System.out.println(player2Name + " has won!");
+            System.out.println(player2Name + " has won! He has " + Player.pointsPlayer2 + " points at the moment." );
         }
     }
 
     boolean checkMatch(char[] symbol) {
         for (int i = 0; i < 3; i++) {
-            if (symbol[i] != symbol[1]) return false;
-            if (symbol[i] == '_') return false;
+            if (symbol[i] != symbol[1] || symbol[i] == '_') return false;
         }
         this.symbol = symbol[1];
         return true;
     }
+
+    boolean checkDraw() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == '_') {
+                    //no draw
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void restartGame(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Do you want to play again?\n(type \"y\" or \"n\")");
+        while (true) {
+            char answer = scanner.next(".").charAt(0);
+            if (answer == 'y') {
+                startGame(player1Name, player2Name);
+                break;
+            } else if (answer == 'n') {
+                System.out.println("Thank you for playing!\nThe score is:\n"
+                        + Player.pointsPlayer1 + " for " + player1Name
+                        + "\n" + Player.pointsPlayer2 + " for " + player2Name);
+                break;
+            } else {
+                System.out.println("Invalid symbol");
+                restartGame();
+            }
+        }
+    }
+
+
 }

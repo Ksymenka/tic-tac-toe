@@ -116,7 +116,12 @@ public class Board {
             for (int column = 0; column < 3; column++) {
                 for (int row = 0; row < 3; row++) {
                     Row[row] = board[column][row];
-                    if (checkMatch(Row)) return true;
+                    if (checkMatch(Row)) {
+                        System.out.println(Row);
+                        System.out.println("win by row");
+                        return true;
+                    }
+                    resetArray(Row);
                 }
 
             }
@@ -125,20 +130,31 @@ public class Board {
             for (int row = 0; row < 3; row++) {
                 for (int column = 0; column < 3; column++) {
                     Column[column] = board[column][row];
-                    if (checkMatch(Column)) return true;
+                    if (checkMatch(Column)) {
+                        System.out.println(Column);
+                        System.out.println("win by column");
+                        return true;
+                    }
+                    resetArray(Column);
                 }
             }
 
             //first slant
             for (int i = 0; i < 3; i++) {
                 Slant1[i] = board[i][i];
-                if (checkMatch(Slant1)) return true;
+                if (checkMatch(Slant1)) {
+                    System.out.println("win by 1slant");
+                    return true;
+                }
             }
 
             //second slant
             for (int j = 2, i = 0; j > -1; j--, i++) {
                 Slant2[i] = board[i][j];
-                if (checkMatch(Slant2)) return true;
+                if (checkMatch(Slant2)) {
+                    System.out.println("win by 2slant");
+                    return true;
+                }
             }
             //check for draw
             if (checkDraw()) {
@@ -199,6 +215,12 @@ public class Board {
                 System.out.println("Invalid symbol");
                 restartGame();
             }
+        }
+    }
+
+    void resetArray(char[] array) {
+        for (int i = 0; i < 3; i++) {
+            array[i] = '_';
         }
     }
 

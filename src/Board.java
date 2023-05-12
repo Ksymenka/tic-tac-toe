@@ -93,14 +93,22 @@ public class Board {
             if (checkWin()) {
                 winMessage();
                 break;
+            } else if (checkDraw()) {
+                System.out.println("Game has ended with a draw! No points for anyone.");
+                break;
             }
+
             System.out.println(player2Name + "'s turn!");
             player2Move();
             checkWin();
             if (checkWin()) {
                 winMessage();
                 break;
+            } else if (checkDraw()) {
+                System.out.println("Game has ended with a draw! No points for anyone.");
+                break;
             }
+
         }
         restartGame();
 
@@ -121,9 +129,8 @@ public class Board {
                         System.out.println("win by row");
                         return true;
                     }
-                    resetArray(Row);
                 }
-
+                resetArray(Row);
             }
 
             //column
@@ -135,8 +142,8 @@ public class Board {
                         System.out.println("win by column");
                         return true;
                     }
-                    resetArray(Column);
                 }
+                resetArray(Column);
             }
 
             //first slant
@@ -156,13 +163,9 @@ public class Board {
                     return true;
                 }
             }
-            //check for draw
-            if (checkDraw()) {
-                System.out.println("Game has ended with a draw! No points for anyone.");
-                return false;
-            }
             break;
         }
+
         return false;
     }
 

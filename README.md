@@ -6,9 +6,11 @@ Jar file contains the most stable version ready for starting. (Even tho idk why 
 - On windows:
 Download repo, execute jar file (by cmd or with batch in the repo)
 - On linux:
-You're on linux, you probably can compile by yourself
+You're on linux, you probably can compile by yourself.
 - On mac:
 Idk, i've never seen a mac
+- (For mac and linux)
+There is .sh file that *should* run the app. I have no idea if it works, but it's there.
 ### Important!
 It's written in java 20 so you need java to use it.
 [Download it from here, if you don't have it already installed](https://www.oracle.com/pl/java/technologies/downloads/)

@@ -50,7 +50,6 @@ public class Board {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please select number of *row* you want to choose:");
         int row = scanner.nextInt();
-
         if (valueOutOfRange(row)) {
             return chooseRow();
         }
@@ -126,7 +125,6 @@ public class Board {
                     Row[row] = board[column][row];
                     if (checkMatch(Row)) {
                         System.out.println(Row);
-                        System.out.println("win by row");
                         return true;
                     }
                 }
@@ -139,7 +137,6 @@ public class Board {
                     Column[column] = board[column][row];
                     if (checkMatch(Column)) {
                         System.out.println(Column);
-                        System.out.println("win by column");
                         return true;
                     }
                 }
@@ -150,7 +147,6 @@ public class Board {
             for (int i = 0; i < 3; i++) {
                 Slant1[i] = board[i][i];
                 if (checkMatch(Slant1)) {
-                    System.out.println("win by 1slant");
                     return true;
                 }
             }
@@ -159,7 +155,6 @@ public class Board {
             for (int j = 2, i = 0; j > -1; j--, i++) {
                 Slant2[i] = board[i][j];
                 if (checkMatch(Slant2)) {
-                    System.out.println("win by 2slant");
                     return true;
                 }
             }

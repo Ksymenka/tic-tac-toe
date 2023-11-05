@@ -1,12 +1,12 @@
 public class Player {
-    private String name;
-    private char charcter;
+    private String  name;
+    private char character;
     private int points;
 
 
-    public Player(String name, char charcter) {
+    public Player(String name, char character) {
         this.name = name;
-        this.charcter = charcter;
+        this.character = character;
     }
 
     public String getName() {
@@ -17,19 +17,19 @@ public class Player {
         this.name = name;
     }
 
-    public char getCharcter() {
-        return charcter;
+    public char getCharacter() {
+        return character;
     }
 
-    public void setCharcter(char charcter) {
-        this.charcter = charcter;
+    public void setCharacter(char character) {
+        this.character = character;
     }
 
     public int getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void incrementPoints() {
+        this.points++;
     }
 }
